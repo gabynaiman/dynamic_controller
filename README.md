@@ -1,6 +1,10 @@
 # DynamicController
 
-Simple way to add CRUD actions to Rails controllers
+Simple way to add CRUD actions to Rails controllers.
+
+Suppoted formats HTML and JSON.
+
+Tested with Ruby 1.9.3 and Rails 3.2.8.
 
 ## Installation
 

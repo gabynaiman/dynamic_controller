@@ -1,4 +1,6 @@
-require "dynamic_controller/version"
+require 'dynamic_controller/version'
+require 'ransack'
+require 'kaminari'
 
 module DynamicController
 
@@ -19,7 +21,7 @@ module DynamicController
     def self.included(base)
       base.helper_method [:resource_class, :controller_namespace]
       base.respond_to :html, :json
-      base.rescue_from StandardError, :with => :handle_error
+      base.rescue_from StandardError, with: :handle_error
     end
 
     def index
@@ -69,12 +71,12 @@ module DynamicController
         flash_message = "#{resource_class.model_name.human} successfully created"
         if params[:save_and_new]
           flash[:success] = flash_message
-          redirect_to :action => :new
+          redirect_to action: :new
         else
           flash.now[:success] = flash_message
           respond_to do |format|
-            format.html { render :show }
-            format.json { render json: model, status: :created, location: model }
+            format.html { redirect_to url_for([parent_model, model].compact) }
+            format.json { render json: model, status: :created }
           end
         end
       else
@@ -95,7 +97,7 @@ module DynamicController
       if model.update_attributes(params[resource_class.model_name.underscore])
         flash.now[:success] = "#{resource_class.model_name.human} successfully updated"
         respond_to do |format|
-          format.html { render :show }
+          format.html { redirect_to url_for([parent_model, model].compact) }
           format.json { head :no_content }
         end
       else
@@ -116,13 +118,13 @@ module DynamicController
       if model.destroy
         flash[:warning] = "#{resource_class.model_name.human} successfully removed"
         respond_to do |format|
-          format.html { redirect_to :action => :index }
+          format.html { redirect_to action: :index }
           format.json { head :no_content }
         end
       else
         flash[:danger] = "#{resource_class.model_name.human} could not be deleted"
         respond_to do |format|
-          format.html { redirect_to :action => :index }
+          format.html { redirect_to action: :index }
           format.json { render json: model.errors, status: :unprocessable_entity }
         end
       end
