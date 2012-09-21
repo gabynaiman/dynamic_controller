@@ -2,25 +2,25 @@ require 'spec_helper'
 
 describe CitiesController, '-> JSON', type: :controller do
 
-  it 'Index -> GET /resources.json' do
+  it 'Index -> GET /parent_resource/:parent_id/resources.json' do
     country = create :country
     3.times { create :city, country: country }
 
     get :index, format: :json, country_id: country.id
 
-    response.status.should be 200 # OK
+    response.status.should eq 200 # OK
     response.content_type.should eq 'application/json'
     JSON.parse(response.body).each do |attributes|
       attributes['name'].should eq City.find(attributes['id']).name
     end
   end
 
-  it 'Show -> GET /resources/:id.json' do
+  it 'Show -> GET /parent_resource/:parent_id/resources/:id.json' do
     city = create :city
 
     get :show, format: :json, id: city.id, country_id: city.country.id
 
-    response.status.should be 200 # OK
+    response.status.should eq 200 # OK
     response.content_type.should eq 'application/json'
     attributes = JSON.parse(response.body)
     attributes['id'].should eq city.id
@@ -28,27 +28,27 @@ describe CitiesController, '-> JSON', type: :controller do
     attributes['country_id'].should eq city.country.id
   end
 
-  context 'Create -> POST /resources.json' do
+  context 'Create -> POST /parent_resource/:parent_id/resources.json' do
 
     it 'Successfully' do
       country = create :country
-      attributes = attributes_for :city, country_id: country.id
+      attributes = attributes_for :city
 
       post :create, format: :json, city: attributes, country_id: country.id
-      puts response.body
 
-      response.status.should be 201 # Created
+      response.status.should eq 201 # Created
       response.content_type.should eq 'application/json'
       city = JSON.parse(response.body)
       city['id'].should_not be_nil
       city['name'].should eq attributes[:name]
-      city['country_id'].should eq attributes[:country_id]
+      city['country_id'].should eq country.id
 
       City.find_by_id(city['id']).should_not be_nil
     end
 
     it 'With errors' do
       country = create :country
+
       post :create, format: :json, country_id: country.id
 
       response.status.should eq 422 # Unprocessable Entity
@@ -58,7 +58,7 @@ describe CitiesController, '-> JSON', type: :controller do
 
   end
 
-  context 'Update -> PUT /resources/:id.json' do
+  context 'Update -> PUT /parent_resource/:parent_id/resources/:id.json' do
 
     it 'Successfully' do
       city = create :city
@@ -84,7 +84,7 @@ describe CitiesController, '-> JSON', type: :controller do
 
   end
 
-  it 'Destroy -> DELETE /resources/:id.json' do
+  it 'Destroy -> DELETE /parent_resource/:parent_id/resources/:id.json' do
     city = create :city
 
     delete :destroy, format: :json, id: city.id, country_id: city.country_id

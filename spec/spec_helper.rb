@@ -5,6 +5,7 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'factory_girl'
 require 'factories'
+require 'controller_factory'
 require 'json'
 
 # Requires supporting ruby files with custom matchers and macros, etc,

@@ -7,6 +7,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @cities.each do |city| %>
@@ -16,6 +17,7 @@
     <td><%= link_to 'Show', [@country, city] %></td>
     <td><%= link_to 'Edit', edit_country_city_path(@country, city) %></td>
     <td><%= link_to 'Destroy', [@country, city], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Streets', country_city_streets_path(@country, city) %></td>
   </tr>
 <% end %>
 </table>
@@ -23,3 +25,5 @@
 <br />
 
 <%= link_to 'New City', new_country_city_path(@country) %>
+<br>
+<%= link_to 'Back to Countries', countries_path %>

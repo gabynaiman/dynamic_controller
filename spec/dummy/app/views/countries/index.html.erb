@@ -6,6 +6,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @countries.each do |country| %>
@@ -14,6 +15,7 @@
     <td><%= link_to 'Show', country %></td>
     <td><%= link_to 'Edit', edit_country_path(country) %></td>
     <td><%= link_to 'Destroy', country, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Cities', country_cities_path(country) %></td>
   </tr>
 <% end %>
 </table>

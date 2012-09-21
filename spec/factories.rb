@@ -9,4 +9,9 @@ FactoryGirl.define do
     country
   end
 
+  factory :street do
+    sequence(:name) { |s| "Street #{s}" }
+    city
+  end
+
 end

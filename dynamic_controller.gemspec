@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Gabriel Naiman']
   s.email       = ['gabynaiman@gmail.com']
   s.homepage    = 'https://github.com/gabynaiman/dynamic_controller'
-  s.summary     = 'Simple way to add CRUD actions to Rails controllers'
-  s.description = 'Simple way to add CRUD actions to Rails controllers'
+  s.summary     = 'Simple way to add CRUD actions into Rails controllers'
+  s.description = 'Simple way to add CRUD actions into Rails controllers'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

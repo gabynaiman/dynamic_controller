@@ -1,0 +1,27 @@
+<h1>Listing streets</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>City</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @streets.each do |street| %>
+  <tr>
+    <td><%= street.name %></td>
+    <td><%= street.city.name %></td>
+    <td><%= link_to 'Show', [@country, @city, street] %></td>
+    <td><%= link_to 'Edit', edit_country_city_street_path(@country, @city, street) %></td>
+    <td><%= link_to 'Destroy', [@country, @city, street], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Street', new_country_city_street_path(@country, @city) %>
+<br>
+<%= link_to 'Back to Cities', country_cities_path(@country) %>

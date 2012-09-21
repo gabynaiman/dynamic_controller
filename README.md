@@ -1,6 +1,6 @@
 # DynamicController
 
-Simple way to add CRUD actions to Rails controllers.
+Simple way to add CRUD actions into Rails controllers.
 
 Suppoted formats HTML and JSON.
 
@@ -28,10 +28,32 @@ Or install it yourself as:
 
 has_crud_actions adds index, show, new, edit, create, update and destroy actions to controller
 
+## Explicit action specification
+
+    class UsersController < ApplicationController
+      has_crud_actions only: [:index, :new, :create]
+    end
+
+or
+
+    class UsersController < ApplicationController
+      has_crud_actions except: :destroy
+    end
+
+
 ## Nested resources support
 
     class ProfilesController < ApplicationController
-      has_crud_actions nested_of: User
+      has_crud_actions
+      nested_of: User
+    end
+
+If has more than one nested level should use
+
+    class StreetsController < ApplicationController
+      has_crud_actions
+      nested_of: Country
+      nested_of: City
     end
 
 ## Contributing

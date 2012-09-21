@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CitiesController, '-> HTML', type: :controller do
 
-  it 'Index -> GET /resources' do
+  it 'Index -> GET /parent_resource/:parent_id/resources' do
     country = create :country
     3.times { create :city, country: country }
 
@@ -15,7 +15,7 @@ describe CitiesController, '-> HTML', type: :controller do
     assigns(:country).should eq country
   end
 
-  it 'Show -> GET /resources/:id' do
+  it 'Show -> GET /parent_resource/:parent_id/resources/:id' do
     city = create :city
 
     get :show, id: city.id, country_id: city.country_id
@@ -27,7 +27,7 @@ describe CitiesController, '-> HTML', type: :controller do
     assigns(:country).should eq city.country
   end
 
-  it 'New -> GET /resources/new' do
+  it 'New -> GET /parent_resource/:parent_id/resources/new' do
     country = create :country
 
     get :new, country_id: country.id
@@ -40,7 +40,7 @@ describe CitiesController, '-> HTML', type: :controller do
     assigns(:country).should eq country
   end
 
-  it 'Edit -> GET /resources/:id/edit' do
+  it 'Edit -> GET /parent_resource/:parent_id/resources/:id/edit' do
     city = create :city
 
     get :edit, id: city.id, country_id: city.country_id
@@ -52,11 +52,11 @@ describe CitiesController, '-> HTML', type: :controller do
     assigns(:country).should eq city.country
   end
 
-  context 'Create -> POST /resources' do
+  context 'Create -> POST /parent_resource/:parent_id/resources' do
 
     it 'Successfully' do
       country = create :country
-      attributes = attributes_for :city, country_id: country.id
+      attributes = attributes_for :city
 
       post :create, city: attributes, country_id: country.id
 
@@ -70,6 +70,7 @@ describe CitiesController, '-> HTML', type: :controller do
 
     it 'With errors' do
       country = create :country
+
       post :create, country_id: country.id
 
       response.should be_success
@@ -81,7 +82,7 @@ describe CitiesController, '-> HTML', type: :controller do
 
   end
 
-  context 'Update -> PUT /resources/:id' do
+  context 'Update -> PUT /parent_resource/:parent_id/resources/:id' do
 
     it 'Successfully' do
       city = create :city
@@ -110,7 +111,7 @@ describe CitiesController, '-> HTML', type: :controller do
 
   end
 
-  it 'Destroy -> DELETE /resources/:id' do
+  it 'Destroy -> DELETE /parent_resource/:parent_id/resources/:id' do
     city = create :city
 
     delete :destroy, id: city.id, country_id: city.country_id

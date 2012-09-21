@@ -1,12 +1,13 @@
 class CitiesController < ApplicationController
-  has_crud_actions nested_of: Country
+  has_crud_actions
+  nested_of Country
 =begin
-  before_filter :load_country
+  before_filter :load_nested
 
   # GET /cities
   # GET /cities.json
   def index
-    @cities = City.all
+    @cities = @country.cities
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,7 +18,7 @@ class CitiesController < ApplicationController
   # GET /cities/1
   # GET /cities/1.json
   def show
-    @city = City.find(params[:id])
+    @city = @country.cities.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -28,7 +29,7 @@ class CitiesController < ApplicationController
   # GET /cities/new
   # GET /cities/new.json
   def new
-    @city = City.new
+    @city = @country.cities.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,13 +39,13 @@ class CitiesController < ApplicationController
 
   # GET /cities/1/edit
   def edit
-    @city = City.find(params[:id])
+    @city = @country.cities.find(params[:id])
   end
 
   # POST /cities
   # POST /cities.json
   def create
-    @city = City.new(params[:city])
+    @city = @country.cities.build(params[:city])
 
     respond_to do |format|
       if @city.save
@@ -60,7 +61,7 @@ class CitiesController < ApplicationController
   # PUT /cities/1
   # PUT /cities/1.json
   def update
-    @city = City.find(params[:id])
+    @city = @country.cities.find(params[:id])
 
     respond_to do |format|
       if @city.update_attributes(params[:city])
@@ -76,7 +77,7 @@ class CitiesController < ApplicationController
   # DELETE /cities/1
   # DELETE /cities/1.json
   def destroy
-    @city = City.find(params[:id])
+    @city = @country.cities.find(params[:id])
     @city.destroy
 
     respond_to do |format|
@@ -87,7 +88,7 @@ class CitiesController < ApplicationController
 
   private
 
-  def load_country
+  def load_nested
     @country = Country.find(params[:country_id])
   end
 =end

@@ -7,7 +7,7 @@ describe CountriesController, '-> JSON', type: :controller do
 
     get :index, format: :json
 
-    response.status.should be 200 # OK
+    response.status.should eq 200 # OK
     response.content_type.should eq 'application/json'
     JSON.parse(response.body).each do |attributes|
       attributes['name'].should eq Country.find(attributes['id']).name
@@ -19,7 +19,7 @@ describe CountriesController, '-> JSON', type: :controller do
 
     get :show, format: :json, id: country.id
 
-    response.status.should be 200 # OK
+    response.status.should eq 200 # OK
     response.content_type.should eq 'application/json'
     attributes = JSON.parse(response.body)
     attributes['id'].should eq country.id
@@ -33,7 +33,7 @@ describe CountriesController, '-> JSON', type: :controller do
 
       post :create, format: :json, country: attributes
 
-      response.status.should be 201 # Created
+      response.status.should eq 201 # Created
       response.content_type.should eq 'application/json'
       country = JSON.parse(response.body)
       country['id'].should_not be_nil
