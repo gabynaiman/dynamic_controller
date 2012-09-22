@@ -3,7 +3,6 @@ module DynamicController
 
     def self.included(base)
       base.send :include, HelperMethods
-      base.respond_to :html, :json
       base.rescue_from StandardError, with: :handle_error
 
       if base.include_action?(:index)
@@ -14,7 +13,7 @@ module DynamicController
             self.collection = resource_class.search(params[:q]).result.page(params[:page])
           end
 
-          respond_with collection
+          Responder.new(self).index
         end
       end
 
@@ -26,7 +25,7 @@ module DynamicController
             self.model = resource_class.find(params[:id])
           end
 
-          respond_with model
+          Responder.new(self).show
         end
       end
 
@@ -37,6 +36,8 @@ module DynamicController
           else
             self.model = resource_class.new
           end
+
+          Responder.new(self).new
         end
       end
 
@@ -47,6 +48,8 @@ module DynamicController
           else
             self.model = resource_class.find(params[:id])
           end
+
+          Responder.new(self).edit
         end
       end
 
@@ -65,10 +68,7 @@ module DynamicController
               redirect_to action: :new
             else
               flash.now[:success] = flash_message
-              respond_to do |format|
-                format.html { redirect_to action: :show, id: model.id }
-                format.json { render json: model, status: :created }
-              end
+              Responder.new(self).create
             end
           else
             respond_to do |format|
@@ -89,10 +89,7 @@ module DynamicController
 
           if model.update_attributes(params[controller_name.singularize])
             flash.now[:success] = "#{resource_class.model_name.human} successfully updated"
-            respond_to do |format|
-              format.html { redirect_to action: :show, id: model.id }
-              format.json { head :no_content }
-            end
+            Responder.new(self).update
           else
             respond_to do |format|
               format.html { render :edit }
@@ -113,10 +110,7 @@ module DynamicController
 
           if model.destroy
             flash[:warning] = "#{resource_class.model_name.human} successfully removed"
-            respond_to do |format|
-              format.html { redirect_to action: :index }
-              format.json { head :no_content }
-            end
+            Responder.new(self).destroy
           else
             flash[:danger] = "#{resource_class.model_name.human} could not be deleted"
             respond_to do |format|

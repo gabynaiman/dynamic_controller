@@ -1,9 +1,9 @@
 module DynamicController
   class Resource
-    attr_accessor :resource_class,
-                  :param_name,
-                  :instance_variable_name,
-                  :children_name
+    attr_reader :resource_class,
+                :param_name,
+                :instance_variable_name,
+                :children_name
 
     def initialize(options={})
       raise 'Param resource_class must be a class' if !options.has_key?(:resource_class) || !options[:resource_class].is_a?(Class)

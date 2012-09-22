@@ -20,5 +20,29 @@ module DynamicController
       (@resource_options[:only] - @resource_options[:except]).include?(action_name)
     end
 
+    def redefined_responders
+      @redefined_responders ||= {}
+    end
+
+    def redefined_responder_to(action, format=nil)
+      redefined_responders[redefined_responder_key(action, format)]
+    end
+
+    def redefined_responder_to?(action, format=nil)
+      redefined_responders.has_key? redefined_responder_key(action, format)
+    end
+
+    ACTIONS.each do |action|
+      define_method "respond_to_#{action}" do |format=nil, &block|
+        redefined_responders[redefined_responder_key(action, format)] = block
+      end
+    end
+
+    private
+
+    def redefined_responder_key(action, format=nil)
+      [action, format].compact.join('_').to_sym
+    end
+
   end
 end

@@ -28,6 +28,12 @@ ActiveRecord::Schema.define(:version => 20120929185302) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "languages", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "streets", :force => true do |t|
     t.string   "name"
     t.integer  "city_id"

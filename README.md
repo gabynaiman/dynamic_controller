@@ -56,6 +56,21 @@ If has more than one nested level should use
       nested_of: City
     end
 
+## Redefining responder
+
+    class LanguagesController < ApplicationController
+      has_crud_actions
+
+      respond_to_create :html do
+        redirect_to action: :index
+      end
+
+      respond_to_update do |format|
+        format.html { redirect_to action: :index }
+        format.json { render json: @language }
+      end
+    end
+
 ## Contributing
 
 1. Fork it

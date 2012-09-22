@@ -14,4 +14,8 @@ FactoryGirl.define do
     city
   end
 
+  factory :language do
+    sequence(:name) { |s| "Language #{s}" }
+  end
+
 end
