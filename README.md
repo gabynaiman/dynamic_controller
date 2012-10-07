@@ -45,15 +45,15 @@ or
 
     class ProfilesController < ApplicationController
       has_crud_actions
-      nested_of: User
+      nested_of User
     end
 
 If has more than one nested level should use
 
     class StreetsController < ApplicationController
       has_crud_actions
-      nested_of: Country
-      nested_of: City
+      nested_of Country
+      nested_of City
     end
 
 ## Redefining responder
