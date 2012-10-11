@@ -55,7 +55,7 @@ module DynamicController
           end
         else
           respond_to do |format|
-            [:html, :json].each do |mime|
+            self.class.responder_formats.each do |mime|
               if self.class.redefined_responder_to?(name, mime)
                 format.send(mime) { self.instance_eval &self.class.redefined_responder_to(name, mime) }
               elsif blocks[mime]

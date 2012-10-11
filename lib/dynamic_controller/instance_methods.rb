@@ -2,7 +2,6 @@ module DynamicController
   module InstanceMethods
 
     def self.included(base)
-      base.send :include, HelperMethods
       base.rescue_from StandardError, with: :handle_error
 
       if base.include_action?(:index)

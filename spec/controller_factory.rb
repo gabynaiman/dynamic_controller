@@ -13,3 +13,11 @@ end
 class OnlyAndExceptController < ActionController::Base
   has_crud_actions only: [:index, :new, :create, :edit], except: [:edit, :destroy]
 end
+
+class XlsResponderController < ActionController::Base
+  has_crud_actions
+
+  respond_to_index :xls do
+    render xls: nil
+  end
+end
