@@ -13,6 +13,7 @@ describe CitiesController, '-> HTML', type: :controller do
     response.should render_template :index
     assigns(:cities).should eq City.all
     assigns(:country).should eq country
+    assigns(:search).should be_a Ransack::Search
   end
 
   it 'Show -> GET /parent_resource/:parent_id/resources/:id' do

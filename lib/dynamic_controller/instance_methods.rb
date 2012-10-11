@@ -8,10 +8,11 @@ module DynamicController
       if base.include_action?(:index)
         base.send :define_method, :index do
           if parent_model
-            self.collection = parent_model.send(controller_name).search(params[:q]).result.page(params[:page])
+            @search = parent_model.send(controller_name).search(params[:q])
           else
-            self.collection = resource_class.search(params[:q]).result.page(params[:page])
+            @search = resource_class.search(params[:q])
           end
+          self.collection = @search.result.page(params[:page])
 
           Responder.new(self).index
         end

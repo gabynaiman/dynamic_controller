@@ -14,6 +14,7 @@ describe StreetsController, '-> HTML', type: :controller do
     assigns(:streets).should eq Street.all
     assigns(:city).should eq city
     assigns(:country).should eq city.country
+    assigns(:search).should be_a Ransack::Search
   end
 
   it 'Show -> GET /first_resource/:first_id/second_resource/:second_id/resources/:id' do
