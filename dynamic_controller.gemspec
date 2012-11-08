@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'ransack'
   s.add_dependency 'kaminari'
+  s.add_dependency 'nql', '0.0.1'
 
   s.add_development_dependency 'rails'
   s.add_development_dependency 'sqlite3'

@@ -1,5 +1,6 @@
 require 'ransack'
 require 'kaminari'
+require 'nql'
 
 module DynamicController
   ACTIONS = [:index, :show, :new, :create, :edit, :update, :destroy]
