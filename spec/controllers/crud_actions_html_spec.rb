@@ -11,7 +11,6 @@ describe CountriesController, '-> HTML', type: :controller do
     response.content_type.should eq 'text/html'
     response.should render_template :index
     assigns(:countries).should eq Country.all
-    assigns(:search).should be_a Ransack::Search
   end
 
   it 'Show -> GET /resources/:id' do

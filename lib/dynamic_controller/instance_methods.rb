@@ -6,21 +6,17 @@ module DynamicController
 
       if base.include_action?(:index)
         base.send :define_method, :index do
-          begin
-            query = params[:q].is_a?(String) ? NQL.to_ransack(params[:q]) : params[:q]
-            valid_query = true
-          rescue NQL::InvalidExpressionError => ex
-            Rails.logger.debug "Invalid search expression: #{params[:q]} | Error: #{ex.message}"
-            query = nil
-            valid_query = false
-          end
           if parent_model
-            @search = parent_model.send(controller_name).search(query)
+            model = parent_model.send(controller_name)
           else
-            @search = resource_class.search(query)
+            model = resource_class
           end
-          self.collection = @search.result(distinct: true).page(params[:page])
-          self.collection = self.collection.where('1=2') unless valid_query
+
+          if search_query_valid?
+            self.collection = model.search(search_query).result(distinct: true).page(params[:page])
+          else
+            self.collection = model.where('1=2').page(params[:page])
+          end
 
           Responder.new(self).index
         end
