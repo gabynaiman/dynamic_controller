@@ -77,7 +77,6 @@ module DynamicController
       node.deep_symbolize_keys.each do |k, v|
         if k == :a
           return false unless valid_attributes.include?(v['0'.to_sym][:name])
-          true
         else
           if v.is_a?(Hash)
             return false unless search_node_valid?(v, valid_attributes)

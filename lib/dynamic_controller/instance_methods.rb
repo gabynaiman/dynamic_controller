@@ -12,10 +12,17 @@ module DynamicController
             model = resource_class
           end
 
+          empty_collection = model.where('1=2').page(params[:page])
+
           if search_query_valid?
-            self.collection = model.search(search_query).result(distinct: true).page(params[:page])
+            begin
+              self.collection = model.search(search_query).result(distinct: true).page(params[:page])
+            rescue ActiveRecord::StatementInvalid => ex
+              Rails.logger.error "Invalid search query: #{params[:q]} | Error: #{ex.message}"
+              self.collection = empty_collection
+            end
           else
-            self.collection = model.where('1=2').page(params[:page])
+            self.collection = empty_collection
           end
 
           Responder.new(self).index
