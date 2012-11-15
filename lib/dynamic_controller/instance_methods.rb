@@ -17,8 +17,9 @@ module DynamicController
           if search_query_valid?
             begin
               self.collection = model.search(search_query).result(distinct: true).page(params[:page])
+              self.collection.all #Force load to handle exception here
             rescue ActiveRecord::StatementInvalid => ex
-              Rails.logger.error "Invalid search query: #{params[:q]} | Error: #{ex.message}"
+              Rails.logger.debug "Invalid search query: #{params[:q]} | Error: #{ex.message}"
               self.collection = empty_collection
             end
           else
