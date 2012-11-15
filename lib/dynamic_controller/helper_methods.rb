@@ -60,12 +60,24 @@ module DynamicController
     end
 
     def search_query
-      params[:q].is_a?(String) ? NQL.to_ransack(params[:q]) : params[:q]
+      return @search_query if @search_query
+
+      query_key = "query_#{params[:controller]}_#{params[:action]}"
+
+      @search_query = if params.has_key?(:q)
+                        session[query_key] = params[:q]
+                      else
+                        session[query_key]
+                      end
+    end
+
+    def ransack_query
+      search_query.is_a?(String) ? NQL.to_ransack(search_query) : search_query
     end
 
     def search_query_valid?
       begin
-        search_node_valid? search_query, model_extended_attributes
+        search_node_valid? ransack_query, model_extended_attributes
       rescue NQL::InvalidExpressionError => ex
         Rails.logger.debug "Invalid search query: #{params[:q]} | Error: #{ex.message}"
         false

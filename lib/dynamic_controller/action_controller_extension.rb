@@ -6,6 +6,8 @@ module DynamicController
       send :extend, ClassMethods
       send :include, InstanceMethods
       send :include, HelperMethods
+
+      helper_method :search_query
     end
 
     def nested_of(resource_class)
