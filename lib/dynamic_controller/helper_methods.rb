@@ -65,7 +65,8 @@ module DynamicController
       query_key = "query_#{params[:controller]}_#{params[:action]}"
 
       @search_query = if params.has_key?(:q)
-                        session[query_key] = params[:q]
+                        session[query_key] = params[:q] if params[:q_persistent] == 'true'
+                        params[:q]
                       else
                         session[query_key]
                       end
