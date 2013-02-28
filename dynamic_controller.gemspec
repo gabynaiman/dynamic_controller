@@ -16,12 +16,12 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'ransack'
-  s.add_dependency 'kaminari'
-  s.add_dependency 'nql', '0.0.5'
+  s.add_dependency 'ransack', '~> 0.7'
+  s.add_dependency 'kaminari', '~> 0.13'
+  s.add_dependency 'nql', '~> 0.1'
 
-  s.add_development_dependency 'rails'
-  s.add_development_dependency 'sqlite3'
-  s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'factory_girl_rails'
+  s.add_development_dependency 'rails', '~> 3.2'
+  s.add_development_dependency 'sqlite3', '~> 1.3'
+  s.add_development_dependency 'rspec-rails', '~> 2.12'
+  s.add_development_dependency 'factory_girl_rails', '~> 3.4'
 end

@@ -12,19 +12,12 @@ module DynamicController
             model = resource_class
           end
 
-          empty_collection = model.where('1=2').page(params[:page])
-
-          if search_query_valid?
-            begin
-              self.collection = model.search(ransack_query).result(distinct: true).page(params[:page])
-              self.collection.all #Force load to handle exception here
-            rescue ActiveRecord::StatementInvalid => ex
-              Rails.logger.debug "Invalid search query: #{params[:q]} | Error: #{ex.message}"
-              self.collection = empty_collection
-            end
-          else
-            self.collection = empty_collection
-          end
+          self.collection =
+              if search_query.is_a? String
+                model.nql(search_query, distinct: true).page(params[:page])
+              else
+                model.search(search_query).result(distinct: true).page(params[:page])
+              end
 
           Responder.new(self).index
         end

@@ -72,34 +72,5 @@ module DynamicController
                       end
     end
 
-    def ransack_query
-      search_query.is_a?(String) ? NQL.to_ransack(search_query) : search_query
-    end
-
-    def search_query_valid?
-      begin
-        search_node_valid? ransack_query, model_extended_attributes
-      rescue NQL::InvalidExpressionError => ex
-        Rails.logger.debug "Invalid search query: #{params[:q]} | Error: #{ex.message}"
-        false
-      end
-    end
-
-    def search_node_valid?(node, valid_attributes)
-      return true unless node
-      node.deep_symbolize_keys.each do |k, v|
-        if k == :a
-          return false unless valid_attributes.include?(v['0'.to_sym][:name])
-        else
-          if v.is_a?(Hash)
-            return false unless search_node_valid?(v, valid_attributes)
-          elsif v.is_a?(Array)
-            v.select { |e| e.is_a?(Hash) }.each { |e| return false unless search_node_valid?(e, valid_attributes) }
-          end
-        end
-      end
-      true
-    end
-
   end
 end
