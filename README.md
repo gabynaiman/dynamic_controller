@@ -1,5 +1,7 @@
 # DynamicController
 
+[![Build Status](https://travis-ci.org/gabynaiman/dynamic_controller.png?branch=master)](https://travis-ci.org/gabynaiman/dynamic_controller)
+
 Simple way to add CRUD actions into Rails controllers.
 
 Suppoted formats HTML and JSON.
