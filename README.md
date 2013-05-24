@@ -1,5 +1,6 @@
 # DynamicController
 
+[![Gem Version](https://badge.fury.io/rb/dynamic_controller.png)](https://rubygems.org/gems/dynamic_controller)
 [![Build Status](https://travis-ci.org/gabynaiman/dynamic_controller.png?branch=master)](https://travis-ci.org/gabynaiman/dynamic_controller)
 [![Coverage Status](https://coveralls.io/repos/gabynaiman/dynamic_controller/badge.png?branch=master)](https://coveralls.io/r/gabynaiman/dynamic_controller?branch=master)
 [![Code Climate](https://codeclimate.com/github/gabynaiman/dynamic_controller.png)](https://codeclimate.com/github/gabynaiman/dynamic_controller)
