@@ -1,6 +1,9 @@
 # DynamicController
 
 [![Build Status](https://travis-ci.org/gabynaiman/dynamic_controller.png?branch=master)](https://travis-ci.org/gabynaiman/dynamic_controller)
+[![Coverage Status](https://coveralls.io/repos/gabynaiman/dynamic_controller/badge.png?branch=master)](https://coveralls.io/r/gabynaiman/dynamic_controller?branch=master)
+[![Code Climate](https://codeclimate.com/github/gabynaiman/dynamic_controller.png)](https://codeclimate.com/github/gabynaiman/dynamic_controller)
+[![Dependency Status](https://gemnasium.com/gabynaiman/dynamic_controller.png)](https://gemnasium.com/gabynaiman/dynamic_controller)
 
 Simple way to add CRUD actions into Rails controllers.
 
