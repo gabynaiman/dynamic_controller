@@ -49,6 +49,8 @@ module DynamicController
     end
 
     def handle_error(error)
+      Rails.logger.error error
+
       respond_to do |format|
         format.html { raise error }
         format.json { render json: error.message, status: :internal_server_error }
